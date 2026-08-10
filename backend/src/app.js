@@ -4,7 +4,6 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const mongoSanitize = require('express-mongo-sanitize');
 const rateLimit = require('express-rate-limit');
-
 const { errorHandler, notFound } = require('./middleware/errorHandler');
 
 const app = express();
@@ -35,6 +34,14 @@ app.use(express.json({ limit: '10kb' })); // Limit payload size — prevents lar
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
+// ---------- Root Route ----------
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Real-Time Property Rental & Maintenance API is running 🚀',
+  });
+});
 
 // ---------- Health Check Route ----------
 app.get('/api/health', (req, res) => {
